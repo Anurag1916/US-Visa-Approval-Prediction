@@ -1,54 +1,48 @@
-columns:
-  - case_id: category
-  - continent: category
-  - education_of_employee: category
-  - has_job_experience: category
-  - requires_job_training: category
-  - no_of_employees: int
-  - yr_of_estab: int
-  - region_of_employment: category
-  - prevailing_wage: int
-  - unit_of_wage: category
-  - full_time_position: category
-  - case_status: category
+grid_search:
+  class: GridSearchCV
+  module: sklearn.model_selection
+  params:
+    cv: 3
+    verbose: 3
+model_selection:
+  module_0:
+    class: KNeighborsClassifier
+    module: sklearn.neighbors
+    params:
+      algorithm: kd_tree
+      weights: uniform
+      n_neighbors: 3
+    search_param_grid:
+      algorithm:
+      - auto
+      - ball_tree
+      - kd_tree
+      - brute
+      weights:
+      - uniform
+      - distance
+      n_neighbors:
+      - 3
+      - 5
+      - 9
 
-numerical_columns:
-  - no_of_employees
-  - prevailing_wage
-  - yr_of_estab
-
-categorical_columns:
-  - case_id
-  - continent
-  - education_of_employee
-  - has_job_experience
-  - requires_job_training
-  - region_of_employment
-  - unit_of_wage
-  - full_time_position
-  - case_status
-
-drop_columns:
-  - case_id
-  - yr_of_estab
-
-# for data transformation
-num_features:
-  - no_of_employees
-  - prevailing_wage
-  - company_age
-
-or_columns:
-  - has_job_experience
-  - requires_job_training
-  - full_time_position
-  - education_of_employee
-
-oh_columns:
-  - continent
-  - unit_of_wage
-  - region_of_employment
-
-transform_columns:
-  - no_of_employees
-  - company_age
+      
+  module_1:
+    class: RandomForestClassifier
+    module: sklearn.ensemble
+    params:
+      max_depth: 10
+      max_features: sqrt
+      n_estimators: 3
+    search_param_grid:
+      max_depth:
+      - 10
+      - 15
+      - 20
+      max_features:
+      - sqrt
+      - log2
+      n_estimators:
+      - 3
+      - 5
+      - 9
